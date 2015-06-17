@@ -195,7 +195,10 @@ BUG FIX: Found a bug where, it turns out, we were only
 saving one geometry as the total fitness, this is why
 our fitting was 'working' so well. 
 
+<<<<<<< HEAD
 I changed it :)
 
 AHHHHHHHHHHHHHHH! -Justin
 I bet you didn't type this
+=======
+>>>>>>> 3f9ba7b7c28664a7b35960d6757c6c6555fd2f79
