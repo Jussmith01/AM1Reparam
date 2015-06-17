@@ -31,7 +31,7 @@ Last modified by: Justin Smith
 1)Creates Oldest Ancestor Gene (OAG)
 2)Produces initial population N from (OAG)
 3)Obtain target excited energies and ground
-  state charges. TESTING
+  state charges.
 -------------------------------------------*/
 void GeneticAlgorithm::GeneticAlgorithmPreparation()
 {
