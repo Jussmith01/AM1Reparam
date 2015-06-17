@@ -196,3 +196,5 @@ saving one geometry as the total fitness, this is why
 our fitting was 'working' so well. 
 
 I changed it :)
+
+AHHHHHHHHHHHHHHH! -Justin
