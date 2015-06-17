@@ -1,0 +1,198 @@
+AM1ReparamVA1.0 Change log
+
+__________________________________________________
+5/18/15 - Justin
+
+-Instead of using the std::system() function for
+launching the Gaussian 09 commands, I switced to
+a house built exec() function in tools.h. 
+
+-Changed function average() to mean(), also made
+this function a template parameter so it works with
+both floats and ints.
+
+-Added a std. dev. function to tools.h
+
+-Added a total population mean and std. dev. to
+the survivors function.
+
+-Fixed the output flag which was ignoring a user
+set output filename and instead forcing the def-
+ault.
+
+-Fixed the nproc input file parameter. It now
+sets the number of threads to use properly. The
+setting occurs in the GeneticAlgorithmPreparation()
+function.
+
+-We now store all parameters in float form in a 
+2D vector called parameters in the GeneticAlgorithm
+for calculating statistical data.
+
+-Added 3 new input file parameters:
+
+1) InitialMutations - Total number of initial
+mutations.
+
+2) InitialPrecision - Inital mutations floating
+point precision.
+
+3) MainloopPrecision - Main loop mutations flo-
+ating point precision.
+
+-Added precision timers to the individual funct-
+ions in the main loop. Outputs the time to the 
+output file.
+
+________________________________________________
+5/19/15
+General Changes
+
+MAJOR CHANGES: ADDITION OF MULTIPLE (G) GEOMETRY CALCULATIONS
+Current goal, a random normally distributed set of geometries
+about the high level minimised structure. The number of geometries
+are set in the input file using the G and Gstd flags.
+
+G = number of geometries to use.
+Gstd = the standard deviation of the randomly produced geometries
+in angstroms.
+
+---------------Dustin----------------------
+-Fixed some iterator inconsistancies
+
+-Made fitness scale in respect to the number of values and number of
+geometries by changing fitvalue in eVFit and fitvalue in survivors
+
+-Made eVContol an array [geometry][values]
+
+-Added the eVContol parameter to the eVFit Function
+
+-Made outputfiles into and array [parameters][geometry]
+
+-Included an additional for loop to survivors that now includes the fitness
+for multiple geometries
+
+-Added the new geometries to the Produce Working Filenames function
+
+---------------Justin-----------------
+-Began adding necessary functions for doing calculations with multiple
+geometries:
+
+1) Added the struct "coordstore" found in structs/coords_struct.h. This
+struct is a container for the different (G) geometries, along with some 
+functions necessary for manipulationi or printing of the set.
+
+2) Added functions: 
+
+	- string MemoryHandler::ProduceControlGaussianOutputs(int j) 
+
+where j is the geometry ID. Used for producing the control sets gaussian
+output for each geometry.
+
+	- void MemoryHandler::ProduceRandomGeometries()
+	
+used for producing the random geometries from the initial. Initial is
+always kept and stored in MH.APH.CS[0] while the rest are store in
+MH.APH.CS[i] where i<G-1 and i!=0.
+
+-Had to heavily modify the function:
+
+	-void AM1ParameterHandler::LoadParametersFromG09Input(string infile)
+
+to obtain and store the geometry from the initial gaussian input file in the
+new coordstore struct.
+
+________________________________________________
+5/20/15
+
+-----------------Justin-----------------
+-Finishing up the addition of multiple geometries via major modifications
+to the genetic_algorithm.cpp file and various debugging.
+
+-----------------Dustin-----------------
+-Fixed error with the eVFit function by including normalization to energies as
+well as charges
+-Adjust the fitness to be the sum of quadruples rather than just squares
+
+________________________________________________
+6/6/15
+
+---------------Dustin-------------------
+Added new functions for reading in forces and calculating
+square difference of force values.
+
+	fReader and fFit - in the Genetic Algorithm class
+
+Used the above functions for force comparison between 
+High-level and AM1 with new best strands.
+
+________________________________________________
+6/5/15
+---------------Justin-------------------
+Added force comparison between original AM1 and each new
+AM1 new best strand.
+
+________________________________________________
+6/7/15
+
+BEGINNING CONVERSION FROM BINARY TO FLOAT
+---------------Justin-------------------
+-Converted the Genome class to work with floats rather than
+binary representation of the parameters. The 'precision'
+input will now change a number by a maximum of +-precision.
+For example:
+A random number R between -precision and + precision is
+generated. Then, the number N is changed as
+
+	N *= (1.0+R)
+
+-Modified the functions
+
+	floattobinary and binarytofloat
+
+to simply copy the the float vector through so that binary
+is not used. I simply commented out the inner workings of
+those functions (Quick fix). 
+
+-Had to make minor modifications in genetic_algorithm.cpp
+to change the way we index for the conversion to floats.
+
+-You now must register the flag_handler with the memory_
+handler constructor. This is to make use of flags within
+the main code.
+
+-Now, if "-v 0" flag is used to launch the program, the program
+will print all survivors. "-v 1" will not print the survivors.
+The default for -v (if not specified) is 0, to print all
+survivors;
+__________________________________________________
+6/8/15
+--------------Dustin--------------------
+-incorporated force fitness into total fitness
+-propose a new input parameter for the force energy weight
+
+__________________________________________________
+6/10/15
+--------------Justin--------------------
+BUG FIX: 'few' was not being applied to the force fit.
+BUG FIX: Force fit and charge fit was not being added to 
+the original fitness.  
+--------------Dustin--------------------
+-added average eV, charge, and force fitness to output
+-fixed the way original AM1 fitness where calculated,
+before it was just including the excited state fitnesses
+
+__________________________________________________
+6/10/15
+--------------Justin--------------------
+-Overhauled the saving of member fitness data/printing
+in the beginning of survivors, Things were a bit messy,
+so I added a bunch of commenting and changed the format
+of printing to give per geometry data as well as total
+data.
+
+BUG FIX: Found a bug where, it turns out, we were only
+saving one geometry as the total fitness, this is why
+our fitting was 'working' so well. 
+
+

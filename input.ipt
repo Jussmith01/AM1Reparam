@@ -1,0 +1,17 @@
+#Input file comment
+nproc: 2 !Number of processors
+WorkingDir:
+TargetFilename: FuranDFT.log !High level gaussian output file
+AM1GauFilename: FuranAM1.com !AM1 Gaussian Input file with AM1 Parameters
+N: 500 !Population size
+J: 2 !Maximum Generations
+cew: 10.0 !Charge Energy Weight
+a: 0.05 !Percent evolution
+b: 0.05 !Best picks % of N to take
+InitialMutations: 30 !The number of initial mutations
+InitialPrecision: 0.85 !The float precision of the initial mutation
+MainloopPrecision: 0.5 !The float precision of the mainloop mutation
+G: 4 !Number of geometries to use
+Gstd: 0.1 !Std. Dev. of Geometry
+forcebest: 1 ! (1 = force new bests to be inluded in next gen, 0 = not)
+conv: 0.5 !Convergence of the genetic algoirthm (By fitness)

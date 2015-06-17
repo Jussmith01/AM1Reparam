@@ -1,0 +1,19 @@
+#Input file comment
+nproc: 8 !Number of processors
+WorkingDir:
+TargetGauParams: B3LYP/cc-pVTZ CIS(Singlets,NStates=15) pop(full) force !High level gaussian output file
+AM1GauFilename: FuranAM1.com !AM1 Gaussian Input file with AM1 Parameters
+N: 500 !Population size
+J: 100 !Maximum Generations
+ew: 1.0 !Excited state energies weight
+cew: 0.0 !Charge Energy Weight
+few: 10000.0 !Force to Energy Weight
+a: 0.04 !Percent evolution
+b: 0.35 !Best picks % of N to take
+InitialMutations: 0.7 !The number of initial mutations
+InitialPrecision: 0.2 !The float precision of the initial mutation
+MainloopPrecision: 0.1 !The float precision of the mainloop mutation
+G: 2 !Number of geometries
+Gstd: 0.15 !Std. dev. of the randomized geometries (angstrom)
+forcebest: 1 ! (1 = force new bests to be inluded in next gen, 0 = not)
+conv: 0.5 !Convergence of the genetic algoirthm (By fitness)

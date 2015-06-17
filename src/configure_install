@@ -1,0 +1,38 @@
+Executable:AM1Reparamx
+$c++:
+	compiler:
+		g++
+	flags:
+		-std=c++11 -fopenmp
+	dir:
+		utils/
+	files:
+		timer_class
+        dir:
+                core/
+        files:
+		AM1Parameters_class
+                memhandler_class
+		genetic_algorithm
+        dir: 
+        	none  
+        files:
+        	main
+	DONE
+$ENDc++
+$cuda:
+	compiler:
+	flags:
+        dir: 
+        files:
+	DONE
+$ENDcuda
+$linkerflags:
+	compiler:
+		g++
+	flags:
+		-std=c++11 -fopenmp
+	DONE
+$ENDlinkerflags
+$END OF FILE$
+
